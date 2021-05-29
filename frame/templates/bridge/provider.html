@@ -1,0 +1,145 @@
+{% load static %}
+{% load bootstrap3 %}
+{% bootstrap_css %}
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="{% static "css/tests.css" %}"/>
+</head>
+<body>
+</div>
+<div class="container" style="width: 100%; height: 100%;">
+    <div class="row">
+        <form action="tests" method="post" class="col-md-1">
+            <input type="hidden" name="context_title" value="{{ context_title }}">
+            <input type="hidden" name="context_id" value="{{ context_id }}">
+            <button class="but" type="submit" name="submitme" id="submitme">Back</button>
+            <br>
+        </form>
+        <div class="col-md-6 col-md-offset-2 text-center">
+            <h1>LTI colibration</h1>
+        </div>
+    </div>
+    <h1>Задания</h1>
+    <div class="parent row">
+        <h2>Оценка параметра сложности <i class="arrow down"></i></h2>
+        <div class="child " style="display: none">
+            <table>
+                <tr>
+                    <th> Task id</th>
+                    <th> Task complexity</th>
+                    <th> Standard error</th>
+                </tr>
+                {% for task in hardTask %}
+                    <tr>
+                        <td> {{ task.0 }} </td>
+                        <td> {{ task.1 }} </td>
+                        <td> {{ task.2 }} </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+    <div class="parent row">
+        <h2>Анализ заданий <i class="arrow down"></i></h2>
+        <div class="child" style="display: none">
+            <table>
+                <tr>
+                    <th> Task name</th>
+                    <th> Graph</th>
+                    <th> Rush model fit coefficient</th>
+                    <th> Recommendation</th>
+
+                </tr>
+                {% for task in Xsquares %}
+                    <tr>
+                        <td> {{ task.1 }} </td>
+                        <td> {{ task.2|safe }} </td>
+                        <td> {{ task.0 }} </td>
+                        <td> {{ task.3 }} </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+    <br>
+    <h1>Категории</h1>
+    <div class="parent row">
+        <h2>Оценка параметра сложности <i class="arrow down"></i></h2>
+        <div class="child" style="display: none">
+            <table>
+                <tr>
+                    <th> Task id</th>
+                    <th> Task complexity</th>
+                    <th> Standard error</th>
+                </tr>
+                {% for task in hardTaskForAllTest %}
+                    <tr>
+                        <td> {{ task.0 }} </td>
+                        <td> {{ task.1 }} </td>
+                        <td> {{ task.2 }} </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+    <div class="parent row">
+        <h2>Анализ категорий <i class="arrow down"></i></h2>
+        <div class="child " style="display: none">
+            <table>
+                <tr>
+                    <th> Task name</th>
+                    <th> Graph</th>
+                    <th> Rush model fit coefficient</th>
+                    <th> Recommendation</th>
+                </tr>
+                {% for task in XsquaresForAllTest %}
+                    <tr>
+                        <td> {{ task.1 }} </td>
+                        <td> {{ task.2|safe }} </td>
+                        <td> {{ task.0 }} </td>
+                        <td> {{ task.3 }} </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+    <br>
+    <div class="parent row">
+        <h2>Анализ теста <i class="arrow down"></i></h2>
+        <div class="child " style="display: none">
+            {% for grapf in pictureGrapficForAllTest %}
+                <td>{{ grapf|safe }}</td>
+            {% endfor %}
+        </div>
+    </div>
+    <br>
+    <div class="parent  row">
+        <h2>Уровень подготовленности студентов <i class="arrow down"></i></h2>
+        <div class="child " style="display: none">
+            <table>
+                <tr>
+                    <th> Student name</th>
+                    <th> Brain status</th>
+                    <th> Standard error</th>
+                </tr>
+                {% for student in studentBrain %}
+                    <tr>
+                        <td> {{ student.0 }} </td>
+                        <td> {{ student.2 }} </td>
+                        <td> {{ student.3 }} </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+{% bootstrap_javascript jquery=True %}
+<script>
+    $(".parent").click(function () {
+        $(this).children(".child").slideToggle(300);
+    });
+</script>
+
+</body>
+</html>

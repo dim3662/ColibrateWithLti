@@ -1,0 +1,45 @@
+version: '2'
+services:
+
+  #  lti_provider:
+  #    image: lti/lti-bridge
+  #    command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+  #    ports:
+  #      - 8000:8000
+
+
+  mariadb5:
+    image: 'docker.io/bitnami/mariadb:10.3-debian-10'
+    ports:
+      - "3306:3306"
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+      - MARIADB_USER=bn_moodle
+      - MARIADB_DATABASE=bitnami_moodle
+    volumes:
+      - 'mariadb_data5:/bitnami/mariadb'
+
+  moodle5:
+    image: 'docker.io/bitnami/moodle:3-debian-10'
+    ports:
+      - '80:8080'
+      - '444:8443'
+    environment:
+      - MOODLE_DATABASE_HOST=mariadb5
+      - MOODLE_DATABASE_PORT_NUMBER=3306
+      - MOODLE_DATABASE_USER=bn_moodle
+      - MOODLE_DATABASE_NAME=bitnami_moodle
+      - ALLOW_EMPTY_PASSWORD=yes
+    volumes:
+      - 'moodle_data5:/bitnami/moodle'
+      - 'moodledata_data5:/bitnami/moodledata'
+    depends_on:
+      - mariadb5
+
+volumes:
+  mariadb_data5:
+    driver: local
+  moodle_data5:
+    driver: local
+  moodledata_data5:
+    driver: local
